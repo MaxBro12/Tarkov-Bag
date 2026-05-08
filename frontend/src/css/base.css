@@ -1,0 +1,130 @@
+html, body, #root {
+    font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+}
+header {
+    background-color: var(--header-color);
+    width: 100%;
+    height: 50px;
+    flex-shrink: 0;
+}
+
+.App {
+    height: 100dvh;
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.full_screen {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+button, input {
+    cursor: pointer;
+
+    color: var(--button-text-color);
+    background-color: var(--button-background-color);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    transition: border-color 0.25s;
+
+    font-weight: 500;
+
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    outline: none;
+
+    padding: 0.5em 1em;
+}
+
+button:hover, input:hover {
+    border-color: var(--button-hover-border-color);
+}
+
+button:active {
+    border-color: var(--button-active-border-color);
+    background-color: var(--button-active-background-color);
+}
+
+button:disabled, input:disabled {
+    background-color: var(--button-disabled);
+}
+
+.rounded_border {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+}
+
+.base_flex_row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-color);
+    box-sizing: border-box;
+}
+
+.base_flex_column {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-color);
+    box-sizing: border-box;
+}
+
+.base_icon {
+    border-width: 0;
+    border-radius: 10px;
+    width: 32px;
+    height: 32px;
+}
+
+.no_select {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.no_wrap {
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    text-wrap: nowrap;
+}
+
+.space-between {
+    justify-content: space-between;
+}
