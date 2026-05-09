@@ -29,3 +29,13 @@ async def post_new_user(user: NewUser, common: CommonDep):
         - 'nick' - никнейм пользователя
     """
     return await UsersHandler(common.db).new_user(nick=user.nick, user_id=common.user.id)
+
+
+@users_router_v1.get('/{user_id}/items', response_model=Ok)
+@cache(key='user:items', expire=60*60)
+@rate_limiter(max_requests=20, time_delta=10)
+async def user_items(common: CommonDep, redis: RedisDep):
+    """
+    Получение предметов пользователя.
+    """
+    return await UsersHandler(common.db).items(user=common.user)

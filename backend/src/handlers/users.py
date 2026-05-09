@@ -8,3 +8,6 @@ class UsersHandler:
     async def new_user(self, nick: str, user_id: int):
         await self.db.users.new(id=user_id, nick=nick)
         return {'ok': True}
+
+    async def items(self, user):
+        return {'items': user.items}
