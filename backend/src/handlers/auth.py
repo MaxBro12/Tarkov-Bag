@@ -143,8 +143,8 @@ class AuthHandlerBase:
                 refresh_token=refresh_token_str
             )
             return User(
-                id=refresh_token.payload['uid'],
-                name=refresh_token.payload['usp'],
+                id=refresh_token.payload['usp'],
+                name=refresh_token.payload['uid'],
             )
         await self._valid_token_data(access_token, 'access', host)
         return User(
