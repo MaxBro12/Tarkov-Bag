@@ -40,7 +40,7 @@ class UsersHandler:
                 detail='User not authorized'
             )
         try:
-            user.extended.items = []
+            await self.db.user_items.del_by_user_id(user_id=user.id)
             await self.db.flush()
             for item in items:
                 if await self.db.items.exists(item['id']):
