@@ -13,7 +13,7 @@ function base_search(query, items) {
 export const Search = ({
     current_item,
     items = [],
-    handle_select_item = undefined,
+    handle_select = undefined,
     handle_search = base_search,
     Current_item_element = BaseLine,
     Line_element = BaseLine,
@@ -21,12 +21,13 @@ export const Search = ({
     func_request = undefined,
     delay = 500,
     adt_style = {},
+    placeholder='Название...'
 }) => {
     /*
     Компонент для поиска по заданным элементам
     - current_item - текущее выбранное значение
     - items - список элементов для поиска
-    - handle_select_item - функция вызываемая при выборе элемента
+    - handle_select - функция вызываемая при выборе элемента
     - handle_search - функция вызываемая при вводе поискового запроса сопоставляет введенный запрос с элементами из списка items
     - Current_item_element - компонент для отображения текущего выбранного элемента (дополнительная кастомизация если потребуется)
     - Line_element - компонент для отображения элементов в списке suggestions
@@ -52,6 +53,13 @@ export const Search = ({
             set_is_open(false);
             return;
         }
+        // Ограничиваем начало запроса после 3х
+        if (value.trim().length <= min_len_to_request) {
+            set_suggestions([]);
+            set_is_open(false);
+            return;
+        }
+
 
         // Устанавливаем новый таймаут
         timeoutRef.current = setTimeout(async () => {
@@ -81,6 +89,13 @@ export const Search = ({
         debouncedSearch(value);
     };
 
+    const handle_search_select = (data) => {
+        set_suggestions([0])
+        set_is_open(false);
+        set_search_term('')
+        handle_select(data)
+    }
+
     // Очистка таймаута при размонтировании компонента
     useEffect(() => {
         return () => {
@@ -96,7 +111,7 @@ export const Search = ({
                 type="text"
                 value={search_term}
                 onChange={(e) => handle_search_change(e)}
-                placeholder='Название продукта или код'
+                placeholder={placeholder}
                 className="search-input rounded_border"
                 aria-haspopup="listbox"
                 aria-expanded={is_open}
@@ -105,7 +120,7 @@ export const Search = ({
                 <ul className="dropdown-menu" role="listbox">
                     {suggestions.map(item => <li
                         key={item.id}
-                        onClick={() => handle_select_item(item)}
+                        onClick={() => handle_search_select(item)}
                         className="suggestion-item"
                         role="option"><Line_element data={item}/></li>
                     )}

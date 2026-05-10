@@ -37,5 +37,16 @@ async def post_new_user(user: NewUser, common: CommonDep):
 async def user_items(common: CommonDep, redis: RedisDep):
     """
     Получение предметов пользователя.
+    User_id используется только для указания кэша.
     """
     return await UsersHandler(common.db).items(user=common.user)
+
+
+@users_router_v1.post('/{user_id}/items', response_model=Ok)
+@rate_limiter(max_requests=100, time_delta=10)
+async def post_user_items(items: list, common: CommonDep):
+    """
+    Добавление предметов пользователю.
+    """
+    print(items)
+    return {'ok': True}

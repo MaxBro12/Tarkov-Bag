@@ -15,7 +15,7 @@ class ExtendedUserData(User):
 
 async def verify_token(request: Request, response: Response, db: DBDep) -> ExtendedUserData:
     user = await auth_handler.verify_token(request, response)
-    db_user = await db.users.by_id(user.id)
+    db_user = await db.users.by_id(user.id, load_relations=True)
 
     return ExtendedUserData(
         id=user.id,

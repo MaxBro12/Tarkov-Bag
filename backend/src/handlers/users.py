@@ -10,4 +10,8 @@ class UsersHandler:
         return {'ok': True}
 
     async def items(self, user):
-        return {'items': user.items}
+        if user.extended is not None:
+            items = user.extended.items
+        else:
+            items = []
+        return {'items': items}

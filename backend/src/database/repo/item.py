@@ -46,5 +46,4 @@ class ItemRepo(RepositoryObj):
             skip=skip,
             limit=limit,
             load_relations=load_relations,
-            order_by_field='created_at',
         )

@@ -10,7 +10,7 @@ class ItemHandler:
         self.db = db
 
     @staticmethod
-    async def _item_to_dict(item: Item) -> dict:
+    def _item_to_dict(item: Item) -> dict:
         return {
             'id': item.id,
             'name': item.name,

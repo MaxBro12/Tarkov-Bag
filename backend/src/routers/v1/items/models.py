@@ -3,9 +3,8 @@ from pydantic import BaseModel
 
 
 class ItemResponse(BaseModel):
-    id: int
+    id: str
     name: str
-    icon: str
 
 
 class MultipleItemsResponse(BaseModel):

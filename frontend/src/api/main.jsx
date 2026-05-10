@@ -2,13 +2,13 @@ import api from "@/api/base.jsx";
 
 export const back_service = {
     items: {
-        all: async ({skip = 0, limit = 10}) => {
+        all: async ({ skip_ = 0, limit_ = 10 }) => {
             return (await api.get('/v1/items', {
                 params: {
-                    skip: skip,
-                    limit: limit,
+                    skip: skip_ ?? 0,
+                    limit: limit_ ?? 10000,
                 }
-            })).data.apps || []
+            })).data.items || []
         },
         sync: async ({code}) => {
             return (await api.post('/v1/items/sync', { code: code }))
