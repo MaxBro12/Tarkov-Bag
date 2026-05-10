@@ -29,6 +29,11 @@ export const back_service = {
             return (await api.post(`/v1/users/${user_id}/items/sync`, { items: new_items }))
         }
     },
+    groups: {
+        items: async ({user_id}) => {
+            return (await api.get(`/v1/groups/${user_id}/items`)).data.items || []
+        }
+     },
 }
 
 export default back_service;

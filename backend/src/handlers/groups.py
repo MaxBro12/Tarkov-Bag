@@ -50,3 +50,37 @@ class GroupHandler:
             user.extended.member_of_groups.remove(group_id)
             return {'ok': True}
         return {'ok': False}
+
+    async def drop_user(self, user: ExtendedUserData, group_id: int, extended_user_id: int) -> dict:
+        if user.extended is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail='User not extended'
+            )
+        # TODO: добавь проверку что удаляет администратор группы
+        if extended_user_id in user.extended.member_of_groups:
+            user.extended.member_of_groups.remove(extended_user_id)
+            return {'ok': True}
+        return {'ok': False}
+
+    async def user_groups(self, user: ExtendedUserData) -> dict:
+        if user.extended is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail='User not extended'
+            )
+        print(user.extended.member_of_groups)
+        groups = []
+        for group in user.extended.member_of_groups:
+            members = []
+            for member in group.members:
+                for item in member.items:
+                    # TODO: ДОПИЛИТЬ УТРОМ
+                members.append({
+                    'nick': member.nick
+                })
+            groups.append({
+                'id': group,
+                'members':
+            })
+        return {'groups': groups}

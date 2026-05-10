@@ -13,6 +13,14 @@ class UsersHandler:
         Расширяет модель пользователя сервиса авторизации, добавляя игровой ник.
         """
         await self.db.users.new(id=user_id, nick=nick)
+        # Автоматически добавляем в базовую группу пока не сделаю api groups
+        if not await self.db.groups.exists(1):
+            await self.db.groups.new(1)
+        await self.db.flush()
+        user = await self.db.users.by_id(user_id)
+        if user is not None:
+            user.member_of_groups.append(await self.db.groups.by_id(1))
+            await self.db.flush()
         return {'ok': True}
 
     async def items(self, user: ExtendedUserData) -> dict:

@@ -17,6 +17,7 @@ export const DashboardPage = () => {
     const { user, check_auth } = useAuth()
     const [items, set_items] = useState([])
     const [user_items, set_user_items] = useState([])
+    const [groups, set_groups] = useState([])
 
     const timerRef = useRef(null);
 
@@ -33,6 +34,7 @@ export const DashboardPage = () => {
             }
             set_items(await back_service.items.all({skip_: 0, limit_: 10000}))
             set_user_items(await back_service.users.user_items(user.nick))
+            set_groups(await back_service.groups.items(user.nick));
         }
         fetch_data()
     }, [])
@@ -77,6 +79,7 @@ export const DashboardPage = () => {
                     items: currentItems,
                 });
             }
+            set_groups(await back_service.groups.items(user.nick));
         } finally {
             set_is_sync(false);
         }

@@ -9,7 +9,7 @@ class Group(Base):
     __tablename__ = "groups"
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    owner_id: Mapped[int] = mapped_column(ForeignKey('extended_users.id'))
+    owner_id: Mapped[int] = mapped_column(ForeignKey('extended_users.id'), nullable=True)
 
     owner: Mapped['ExtendedUser'] = relationship('ExtendedUser')
 

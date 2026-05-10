@@ -14,7 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from core.redis_client import RedisClient
 from core.fast_middlewares import blocker_check
-from src.routers import items_router_v1, users_router_v1, auth_router_v1
+from src.routers import items_router_v1, users_router_v1, auth_router_v1, groups_router_v1
 from src.database import init_db
 from src.services import blocklist_service
 
@@ -78,9 +78,10 @@ async def blocker(request: Request, call_next):
     return await call_next(request)
 
 
+app.include_router(auth_router_v1)
 app.include_router(items_router_v1)
 app.include_router(users_router_v1)
-app.include_router(auth_router_v1)
+app.include_router(groups_router_v1)
 
 
 if __name__ == "__main__":

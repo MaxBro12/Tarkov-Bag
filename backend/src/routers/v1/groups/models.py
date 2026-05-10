@@ -9,3 +9,23 @@ class Group(BaseModel):
 
 class UserGroupsRequestsResponse(BaseModel):
     groups: list[Group]
+
+
+class Item(BaseModel):
+    id: int
+    name: str
+    count: int
+
+
+class OtherUsersItems(BaseModel):
+    nick: str
+    items: list[Item]
+
+
+class GroupMembers(BaseModel):
+    id: int
+    members: list[OtherUsersItems]
+
+
+class UserGroupsResponse(BaseModel):
+    groups: list[GroupMembers]
