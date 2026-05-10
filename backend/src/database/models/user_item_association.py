@@ -1,13 +1,14 @@
-from sqlalchemy import (
-    Column, Integer, ForeignKey, Table
-)
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.database import Base
 
 
-user_item_association = Table(
-    'user_items',
-    Base.metadata,
-    Column('user_id', Integer, ForeignKey('extended_users.id'), primary_key=True),
-    Column('item_id', Integer, ForeignKey('items.id'), primary_key=True),
-    Column('quantity', Integer, default=1),
-)
+class UserItem(Base):
+    __tablename__ = 'user_items'
+    user_id: Mapped[int] = mapped_column(ForeignKey('extended_users.id'), primary_key=True)
+    item_id: Mapped[int] = mapped_column(ForeignKey('items.id'), primary_key=True)
+    count: Mapped[int] = mapped_column(default=1)
+
+    # Связи с основными моделями
+    user: Mapped["ExtendedUser"] = relationship(back_populates="items")
+    item: Mapped["Item"] = relationship()

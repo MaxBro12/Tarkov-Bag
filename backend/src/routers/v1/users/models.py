@@ -1,4 +1,4 @@
-from datetime import datetime
+from typing import List
 
 from pydantic import BaseModel
 
@@ -16,5 +16,13 @@ class NewItem(BaseModel):
     count: int
 
 
+class UserItem(NewItem):
+    name: str
+
+
+class UserItemsResponse(BaseModel):
+    items: List[UserItem]
+
+
 class NewItemsRequest(BaseModel):
-    items: tuple[NewItem, ...]
+    items: List[NewItem]

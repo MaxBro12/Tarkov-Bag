@@ -11,6 +11,9 @@ class ItemRepo(RepositoryObj):
     def __init__(self, session: AsyncSession):
         super().__init__(Item, session=session)
 
+    async def exists(self, id: str) -> bool:
+        return await self._exists(Item.id == id)
+
     async def by_id(self, Item_id: int, load_relations: bool = True) -> Item | None:
         return await self.get(
             filter_=Item.id == Item_id,

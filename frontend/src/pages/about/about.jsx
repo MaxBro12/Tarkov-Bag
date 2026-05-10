@@ -28,3 +28,6 @@ export const AboutPage = () => {
         <Link to='/about/feetback' className='base_button'>Нашли ошибку или есть предложение?</Link>
     </div>
 }
+
+
+export default AboutPage;

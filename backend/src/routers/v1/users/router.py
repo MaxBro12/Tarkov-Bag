@@ -1,11 +1,11 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 
 from core.pydantic_misc_models import Ok
 from core.fast_decorators import cache, rate_limiter
 from core.redis_client import RedisDep
 from src.depends import CommonDep
 from src.handlers.users import UsersHandler
-from .models import Nicks, NewUser
+from .models import Nicks, NewUser, NewItemsRequest, UserItemsResponse
 
 
 users_router_v1 = APIRouter(prefix='/v1/users', tags=['users'])
@@ -31,8 +31,8 @@ async def post_new_user(user: NewUser, common: CommonDep):
     return await UsersHandler(common.db).new_user(nick=user.nick, user_id=common.user.id)
 
 
-@users_router_v1.get('/{user_id}/items', response_model=Ok)
-@cache(key='user:items', expire=60*60)
+@users_router_v1.get('/{user_id}/items', response_model=UserItemsResponse)
+@cache(key='user:items', expire=2*60)
 @rate_limiter(max_requests=20, time_delta=10)
 async def user_items(common: CommonDep, redis: RedisDep):
     """
@@ -42,11 +42,13 @@ async def user_items(common: CommonDep, redis: RedisDep):
     return await UsersHandler(common.db).items(user=common.user)
 
 
-@users_router_v1.post('/{user_id}/items', response_model=Ok)
+@users_router_v1.post('/{user_id}/items/sync', response_model=Ok)
 @rate_limiter(max_requests=100, time_delta=10)
-async def post_user_items(items: list, common: CommonDep):
+async def post_user_items(items: NewItemsRequest, common: CommonDep):
     """
     Добавление предметов пользователю.
     """
-    print(items)
-    return {'ok': True}
+    return await UsersHandler(common.db).sync_items(
+        user=common.user,
+        items=[item.model_dump() for item in items.items]
+    )

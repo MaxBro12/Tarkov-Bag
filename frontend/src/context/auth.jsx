@@ -17,7 +17,6 @@ export function AuthProvider({ children }) {
         try {
             set_loading(true);
             const new_user = await auth_service.user()
-            console.log(new_user)
             set_user({
                 name: new_user.name,
                 nick: new_user.nick,

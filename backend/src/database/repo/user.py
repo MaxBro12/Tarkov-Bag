@@ -1,4 +1,4 @@
-from sqlalchemy import select, and_
+from sqlalchemy import select, and_, insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.trash import generate_trash_string
@@ -25,13 +25,15 @@ class ExtendedUserRepo(RepositoryObj):
             load_relations=load_relations
         )
 
-    async def nicks(self) -> tuple[str, ...]:
-        return tuple((await self.session.execute(select(ExtendedUser.nick))).scalars().all())
+    async def nicks(self, current_user_id: int) -> tuple[str, ...]:
+        return tuple((await self.session.execute(select(ExtendedUser.nick).where(
+            ExtendedUser.id != current_user_id
+        ))).scalars().all())
 
     async def new(
         self,
-        id: str,
-        nick: int,
+        id: int,
+        nick: str,
         commit: bool = False
     ) -> bool:
         return await self.add(ExtendedUser(
