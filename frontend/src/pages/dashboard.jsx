@@ -93,7 +93,7 @@ export const DashboardPage = () => {
     // Запускаем таймер при монтировании компонента
     useEffect(() => {
         // Первая отправка через 2 минуты
-        timerRef.current = setInterval(fetch_user_data, 2 * 60 * 1000); // 120000 мс = 2 минуты
+        timerRef.current = setInterval(fetch_user_data, 30 * 1000); // 30 секунд
 
         // Очистка таймера при размонтировании
         return () => {
@@ -107,7 +107,7 @@ export const DashboardPage = () => {
         return <LoadingAnimation />;
     }
 
-    return <div style={{width:'100%', maxWidth: '500px', padding: '5px'}}>
+    return <div style={{width:'', maxWidth: '500px', padding: '5px'}}>
         {(user?.nick === undefined || user?.nick === null) && <h1>Идет авторизация...</h1>}
         <Search
             items={items}

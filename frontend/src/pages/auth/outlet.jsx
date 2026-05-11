@@ -11,7 +11,7 @@ export const AuthOutlet = () => {
         }
     }
 
-    return <div className='full_screen' style={{height:'100dvh'}}>
+    return <div className='full_screen' style={{height:'100dvh', width: '100%', maxWidth: '300px'}}>
         <Outlet />
     </div>
 };

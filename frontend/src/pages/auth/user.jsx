@@ -6,8 +6,8 @@ import { LoadingAnimation } from '@/components/utils/loading_animation.jsx';
 
 export const UserPage = () => {
     const [loading, set_loading] = useState(false)
-    const { user, logout, check_auth } = useAuth()
-    const [data, set_data] = useState({ nick: user.nick ?? '' })
+    const { user, logout } = useAuth()
+    const [data, set_data] = useState({ nick: user?.nick ?? '' })
 
     const handle_change = (e) => set_data({ nick: e.target.value })
 
@@ -15,17 +15,19 @@ export const UserPage = () => {
         set_loading(true)
         await back_service.users.set_nick(data.nick)
         set_loading(false)
-        await check_auth()
+        window.location.href = '/'
     }
 
     if (loading) return <LoadingAnimation />
 
-    return <div className='base_flex_column no_wrap'>
-        <div className='base_flex_row'>
+    return <div className='base_flex_column no_wrap' style={{width: '100%', maxWidth: '300px'}}>
+        <div className='base_flex_row' style={{width: '100%'}}>
             <span className='no_select'>Имя: </span>
-            <span>{user.name}</span>
+            <span>{user?.name}</span>
         </div>
-        <form className='base_flex_column' onSubmit={(e) => { e.preventDefault(); form_submit() }}>
+        <form className='base_flex_row no_wrap' onSubmit={(e) => { e.preventDefault(); form_submit() }} style={{
+            width: '100%'
+        }}>
             <input
                 type='text'
                 name='Ник'
