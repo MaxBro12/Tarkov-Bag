@@ -65,10 +65,7 @@ class GroupHandler:
 
     async def user_groups(self, user: ExtendedUserData) -> dict:
         if user.extended is None:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail='User not extended'
-            )
+            return {'groups': []}
         groups = []
         for group in user.extended.member_of_groups:
             group = await self.db.groups.by_id(group.id)
