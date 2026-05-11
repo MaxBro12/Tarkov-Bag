@@ -6,7 +6,7 @@ from src.database.models.group import Group
 
 class GroupRepo(RepositoryObj):
     def __init__(self, session: AsyncSession):
-        super().__init__(Group, session=session)
+        super().__init__(Group, session=session, relationships=('members',))
 
     async def exists(self, group_id: int) -> bool:
         return await self._exists(Group.id == group_id)

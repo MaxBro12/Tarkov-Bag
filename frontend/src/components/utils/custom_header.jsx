@@ -15,7 +15,18 @@ function header_to_show(header, user) {
     return true
 }
 function is_current_window(path) {
-    return window.location.pathname.startsWith(path)
+    const currentPath = window.location.pathname;
+
+    // Нормализуем пути
+    const normalizedCurrent = currentPath.replace(/\/+$/, '') || '/';
+    const normalizedPath = path.replace(/\/+$/, '') || '/';
+
+    if (normalizedPath === '/') {
+        return normalizedCurrent === '/';
+    }
+
+    return normalizedCurrent === normalizedPath ||
+        normalizedCurrent.startsWith(normalizedPath + '/');
 }
 function get_current_window(headers) {
     for (const i of headers) {

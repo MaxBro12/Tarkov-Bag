@@ -30,8 +30,8 @@ export const back_service = {
         }
     },
     groups: {
-        items: async ({user_id}) => {
-            return (await api.get(`/v1/groups/${user_id}/items`)).data.items || []
+        items: async (user_id) => {
+            return (await api.get(`/v1/groups/${user_id}/items`)).data.groups || []
         }
      },
 }

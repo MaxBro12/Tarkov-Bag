@@ -41,7 +41,7 @@ export const ItemUserCount = ({ data, onRemove, onQuantityChange }) => {
     return <div className='base_flex_row' style={{flexWrap: 'nowrap', width: '100%'}}>
         <Item id={data.id} name={data.name}/>
         <button
-            className="quantity-btn"
+            className="no_select"
             onClick={() => onQuantityChange(data.id, data.count - 1)}
             disabled={data.count <= 1}
         >
@@ -68,12 +68,14 @@ export const ItemUserCount = ({ data, onRemove, onQuantityChange }) => {
 
         <button
             onClick={() => onQuantityChange(data.id, data.count + 1)}
+            className='no_select'
         >
             +
         </button>
         <button
             onClick={() => onRemove(data.id)}
             title="Удалить предмет"
+            className='no_select'
         >
             ✕
         </button>

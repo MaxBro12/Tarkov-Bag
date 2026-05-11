@@ -69,18 +69,26 @@ class GroupHandler:
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail='User not extended'
             )
-        print(user.extended.member_of_groups)
         groups = []
         for group in user.extended.member_of_groups:
+            group = await self.db.groups.by_id(group.id)
+            if group is None:
+                continue
             members = []
             for member in group.members:
-                for item in member.items:
-                    # TODO: ДОПИЛИТЬ УТРОМ
+                if member.id == user.extended.id:
+                    continue
+                items = []
+                for item in await self.db.user_items.by_user_id(member.id):
+                    items.append({
+                        'id': item.item_id,
+                        'name': item.item.name,
+                        'count': item.count
+                    })
                 members.append({
-                    'nick': member.nick
+                    'nick': member.nick,
+                    'items': items
                 })
-            groups.append({
-                'id': group,
-                'members':
-            })
+            groups.append({'id': group.id, 'members': members})
+        print(groups)
         return {'groups': groups}

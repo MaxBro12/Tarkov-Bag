@@ -17,7 +17,6 @@ class Group(Base):
         "ExtendedUser",
         secondary=user_group_association,
         back_populates="member_of_groups",
-        lazy="dynamic"
     )
 
     def __repr__(self):

@@ -4,7 +4,7 @@ export const ItemIcon = ({id, name}) => {
         height: 32,
         width: 32,
         borderWidth: 0,
-    }} className='rounded_border'/>
+    }} className='rounded_border no_select'/>
 };
 
 

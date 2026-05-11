@@ -35,6 +35,10 @@ function App() {
             label: 'Группы',
             no_user_show: false
         },
+        {
+            path: '/about',
+            label: 'О нас',
+        }
     ]
 
     return (

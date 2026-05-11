@@ -12,7 +12,7 @@ class UserGroupsRequestsResponse(BaseModel):
 
 
 class Item(BaseModel):
-    id: int
+    id: str
     name: str
     count: int
 

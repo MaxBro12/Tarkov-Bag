@@ -1,17 +1,13 @@
-import {useEffect, useState} from "react";
+
 import {Link, useSearchParams} from "react-router-dom";
 
 
 export const AboutPage = () => {
     const [params] = useSearchParams();
-    const [content, set_content] = useState({});
+    const content = {
+        'about': 'Это приложение для помощи тиммейтам в поисках нужных вам придметов. Укажите какие предметы вам необходимы и ваши тиммейты их увидят. Так же помогайте своим друзьям. Приложение в бета версии, как и тарков.'
+    }
     const error = params.get('error') || undefined;
-
-    useEffect(() => {
-        fetch('/about.json')
-            .then((res) => res.json())
-            .then((d) => set_content(d));
-    }, []);
 
     if (error === 'backend_off') {
         return <div>Не удалось подключиться к серверу. Пожалуйста, попробуйте позже.</div>;
