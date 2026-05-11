@@ -37,11 +37,11 @@ class AuthService(HttpMakerAsync):
         )
 
     async def login(self, name: str, password: str, ip: str) -> AuthToken:
-        ans = await self._make('/v1/auth/login', method='POST', json={
+        ans = await self.post('/v1/auth/login', json={
             'name': name,
             'password': password,
             'ip': ip
-        })
+        }, try_wait_if_error=False)
         if ans.status != 200:
             raise HTTPException(
                 status_code=ans.status,
@@ -50,7 +50,7 @@ class AuthService(HttpMakerAsync):
         return AuthToken(ans.json['access_token'], ans.json['refresh_token'])
 
     async def logout(self, name: str) -> bool:
-        ans = await self._make('/v1/auth/logout', method='POST', json={'name': name})
+        ans = await self.post('/v1/auth/logout', json={'name': name})
         if ans.status != 200:
             raise HTTPException(
                 status_code=ans.status,
@@ -59,10 +59,10 @@ class AuthService(HttpMakerAsync):
         return ans.json['ok']
 
     async def refresh(self, refresh_token: str, ip: str) -> AuthToken:
-        ans = await self._make('/v1/auth/refresh', method='POST', json={
+        ans = await self.post('/v1/auth/refresh', json={
             'refresh_token': refresh_token,
             'ip': ip
-        })
+        }, try_wait_if_error=False)
         if ans.status != 200:
             raise HTTPException(
                 status_code=ans.status,
