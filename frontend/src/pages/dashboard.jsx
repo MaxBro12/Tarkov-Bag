@@ -38,13 +38,8 @@ export const DashboardPage = () => {
     useEffect(() => {
         const fetch_data = async () => {
             set_loading(true);
-            if (user?.nick === null || user?.nick === undefined) {
-                await check_auth()
-            }
             set_items(await back_service.items.all({skip_: 0, limit_: 10000}))
-
-            const new_user_items = await back_service.users.user_items(user?.nick)
-            set_user_items(new_user_items)
+            set_user_items(await back_service.users.user_items(user?.nick))
             set_groups(await back_service.groups.items(user?.nick));
             set_loading(false)
         }
